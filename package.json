@@ -31,8 +31,9 @@
   "dependencies": {
     "botkit": "0.0.5",
     "elizabot": "0.0.2",
+    "jsonfile": "^3.0.0",
     "natural": "^0.2.1",
     "request": "2.75.0",
-    "sentiment": "2.1.0"
+    "sentiment": "^2.1.0"
   }
 }

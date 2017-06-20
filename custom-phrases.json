@@ -1,1 +1,22 @@
-{}
+{
+  "Dribble": [
+    "I’ll dribble forward",
+    "Dribble forward",
+    "I’ll go forward",
+    "I’ll move forward",
+    "Move up",
+    "Dribble"
+  ],
+  "SoccerGame": [
+    "Let’s start the soccer game",
+    "Yeah, let’s play soccer",
+    "Okay, I will play soccer"
+  ],
+  "Start": [
+    "Let's get started",
+    "Let's do this",
+    "Time to go!",
+    "I am ready",
+    "I am ready to go"
+  ]
+}
