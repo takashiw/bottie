@@ -41,6 +41,7 @@ module.exports = function(skill, info, bot, message) {
     ]);
 
     function soccerGame(convo){
+      score = 0;
       convo.say("Let's go!");
       convo.say("Its nearing the end of regulation in our championship match, the score is tied 0 -0.");
       convo.say("You have the ball at midfield with no defenders on you.");
@@ -52,8 +53,85 @@ module.exports = function(skill, info, bot, message) {
             // var interpretation = Bottie.Brain.interpret(response.text);
             // console.log('Bottie interpretation: ', interpretation);
             // convo.say("Alright, let's " + interpretation);
+            phrase = response.text.toLowerCase();
+            didDribble = true;
+            if(phrase == "dribble"){
+              score += 2;
+              didDribble = true
+            } else {
+              score += 1;
+              didDribble = false;
+            }
+            convo.next();
 
+            phraseToSay = "";
 
+            console.log(didDribble);
+            if(didDribble){
+              convo.ask('A defender attacks you! Do you shake the defender and dribble forward or pass forward to me?', [
+                {
+                  pattern: '.*',
+                  callback: function(response, convo){
+                    phrase = response.text.toLowerCase();
+                    if(phrase == "dribble"){
+                      score += 2;
+                      phraseToSay = "You make it to the goal box!";
+                    } else {
+                      score += 1;
+                      didDribble = false;
+                      phraseToSay = "I make it to the goal box and give and go the ball back to you!";
+                      convo.next();
+                    }
+                    convo.next();
+                  }
+                }
+              ]);
+            } else {
+              convo.ask('A defender attacks me! I need to pass, do you call for the ball or signal me to pass to our teammate?', [
+                {
+                  pattern: '.*',
+                  callback: function(response, convo){
+                    phrase = response.text.toLowerCase();
+                    if(phrase == "call"){
+                      score += 2;
+                      phraseToSay = "You make it to the goal box!!";
+                    } else {
+                      score += 1;
+                      didDribble = false;
+                      phraseToSay = "Our teammate passes back to you in the goal box!";
+                    }
+                    convo.next();
+                  }
+                }
+              ]);
+            }
+
+            convo.say(phraseToSay);
+
+            convo.ask(phraseToSay + 'Now we are both in the goal box and you have the ball. The last defender is shading towards you, do you shoot now or pass to me to shoot?', [
+              {
+                pattern: '.*',
+                callback: function(response, convo){
+                  phrase = response.text.toLowerCase();
+                  if(phrase == "shoot"){
+                    score += 2;
+                  } else {
+                    score += 1;
+                  }
+                  convo.next();
+
+                  convo.say("...");
+                  convo.say("The ball is in the air");
+                  convo.say("...");
+                  convo.say("It's going to the top corner");
+                  convo.say("...");
+                  convo.say("...");
+                  convo.say("GOAL!!!@!!!!!!");
+                  console.log("Score" + score);
+
+                }
+              }
+            ]);
           }
         }
       ]);
